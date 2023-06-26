@@ -1,1 +1,3 @@
-# unity-p-1
+# Unity Course 1
+
+The created games will be found here.
