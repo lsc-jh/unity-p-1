@@ -20,7 +20,7 @@ public class PlayerLogic : MonoBehaviour
         tempMousePosition = Camera.main.ScreenToWorldPoint(tempMousePosition);
         tempMousePosition.z = 0;
 
-        transform.position = Vector3.MoveTowards(transform.position, tempMousePosition, 2000 * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, tempMousePosition, 2000 * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
