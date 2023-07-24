@@ -35,8 +35,13 @@ public class PlayerLogic : MonoBehaviour
                     10
                 );
             }
-
             _hasSiwtchedLayers = !_hasSiwtchedLayers;
+        }
+
+        if (transform.position.y < -10)
+        {
+            _hasSiwtchedLayers = false;
+            transform.position = new Vector3(-15, 1.5f, 0);
         }
         
     }
@@ -65,11 +70,15 @@ public class PlayerLogic : MonoBehaviour
             var currentPlayerX = (80 * (i + 1)) - 15;
             CheckFinish(other.gameObject, $"Finish{i + 1}", currentPlayerX, 1.5f);
         }
-
-
+        
         if (other.gameObject.tag == "obstacle")
         {
             MovePlayer(-13, 1.5f);
+        }
+
+        if (other.gameObject.tag == "tramp")
+        {
+            GetComponent<Rigidbody>().AddForce(0, 750, 0);
         }
     }
 
