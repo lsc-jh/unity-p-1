@@ -9,8 +9,39 @@ public class PlayerLogic : MonoBehaviour
     public float MoveForce;
     private bool _canJump = false;
     private bool _hasSiwtchedLayers = false;
+
+    private Vector2 _swipeStartPosition;
+    private Vector2 _swipeEndPosition;
+    
     void Update()
     {
+        
+        if (Input.touchCount > 0)
+        {
+            var touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                Debug.Log("The screen got touched");
+                _swipeStartPosition = touch.position;
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                Debug.Log("The screen got released.");
+                _swipeEndPosition = touch.position;
+                if (_swipeStartPosition.y < _swipeEndPosition.y)
+                {
+                    _hasSiwtchedLayers = true;
+                } 
+                else if (_swipeStartPosition.y > _swipeEndPosition.y)
+                {
+                    _hasSiwtchedLayers = false;
+                }
+            }
+        }
+        
+        
+        
         if (Input.GetKeyDown(KeyCode.W) && _canJump)
         {
             _canJump = false;
