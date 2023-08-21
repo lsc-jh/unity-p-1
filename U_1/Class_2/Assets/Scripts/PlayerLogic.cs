@@ -14,8 +14,6 @@ public class PlayerLogic : MonoBehaviour
     public int LayerCount = 2;
     public Joystick Joystick;
 
-    private bool isJoystickIsActive = false;
-
     void Update()
     {
         DesktopControl();
@@ -81,8 +79,6 @@ public class PlayerLogic : MonoBehaviour
         {
             rb.velocity = new Vector3(MoveForce * Time.deltaTime, rb.velocity.y, rb.velocity.z);
         }
-        
-        
     }
     
     private void MobileControl()
