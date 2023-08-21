@@ -6,10 +6,20 @@ public class GameControllerScript : MonoBehaviour
 {
     public PlayerLogic player;
     public Camera gameCamera;
+    [SerializeField]
+    public GameObject Joystick;
+    
     
     void Start()
     {
-        
+        if (Application.platform != RuntimePlatform.Android)
+        {
+            Joystick.SetActive(false);
+        }
+        else
+        {
+            Joystick.SetActive(true);
+        }
     }
 
     // Update is called once per frame
