@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -11,8 +12,17 @@ public class PlayerLogic : MonoBehaviour
     private int _layerIndex = 0;
     private Vector2 _swipeStartPosition;
     private Vector2 _swipeEndPosition;
+    
     public int LayerCount = 2;
     public Joystick Joystick;
+    public GameObject StageText;
+    public GameObject CoinText;
+    public GameObject LiveText;
+    
+    public int HeartAmount = 3;
+    private int _coinCount = 0;
+    private int _stage = 1;
+    private bool _game = true;
 
     void Update()
     {
@@ -22,8 +32,16 @@ public class PlayerLogic : MonoBehaviour
         {
             ChangePlayerLayer(0);
             transform.position = new Vector3(-15, 1.5f, 0);
+            _stage = 1;
+            HeartAmount--;
         }
-        
+
+        if (_game)
+        {
+            StageText.GetComponent<Text>().text = $"Stage: {_stage}";
+            CoinText.GetComponent<Text>().text = $"Coins: {_coinCount}";
+            LiveText.GetComponent<Text>().text = GetCurrentHeartAmount(HeartAmount);
+        }
     }
 
     private void FixedUpdate()
@@ -35,21 +53,31 @@ public class PlayerLogic : MonoBehaviour
     {
         _canJump = true;
         
-        var initX = -15;
         for (var i = 0; i < 5; i++)
         {
             var currentPlayerX = (80 * (i + 1)) - 15;
-            CheckFinish(other.gameObject, $"Finish{i + 1}", currentPlayerX, 1.5f);
+            CheckFinish(other.gameObject, i + 1, currentPlayerX, 1.5f);
         }
         
         if (other.gameObject.tag == "obstacle")
         {
             MovePlayer(-13, 1.5f);
+            _stage = 1;
+            HeartAmount--;
         }
 
         if (other.gameObject.tag == "tramp")
         {
             GetComponent<Rigidbody>().AddForce(0, 750, 0);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "coin")
+        {
+            Destroy(other.gameObject);
+            _coinCount++;
         }
     }
 
@@ -157,11 +185,23 @@ public class PlayerLogic : MonoBehaviour
         ChangePlayerLayer(0);
     }
 
-    private void CheckFinish(GameObject finishObject, string finishName, float x, float y)
+    private void CheckFinish(GameObject finishObject, int currentStage, float x, float y)
     {
-        if (finishObject.name == finishName)
+        if (finishObject.name == $"Finish{currentStage}")
         {
             MovePlayer(x, y);
+            _stage++;
         }
+    }
+
+    private string GetCurrentHeartAmount(int amount)
+    {
+        var lives = "";
+        for (var i = 0; i < amount; i++)
+        {
+            lives += "❤️";
+        }
+
+        return lives;
     }
 }
