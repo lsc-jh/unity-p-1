@@ -14,10 +14,12 @@ public class PlayerLogic : MonoBehaviour
     private Vector2 _swipeEndPosition;
     
     public int LayerCount = 2;
+    public int StageCount = 3;
     public Joystick Joystick;
     public GameObject StageText;
     public GameObject CoinText;
     public GameObject LiveText;
+    public GameObject FinishText;
     
     public int HeartAmount = 3;
     private int _coinCount = 0;
@@ -189,6 +191,13 @@ public class PlayerLogic : MonoBehaviour
     {
         if (finishObject.name == $"Finish{currentStage}")
         {
+            if (currentStage == StageCount)
+            {
+                FinishText.GetComponent<Text>().text = $"Well Done!\nYou Collected {_coinCount} Coins!";
+                Time.timeScale = 0;
+                FinishText.SetActive(true);
+                return;
+            }
             MovePlayer(x, y);
             _stage++;
         }
