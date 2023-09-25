@@ -1,0 +1,16 @@
+{
+  "5f85decf1b724684da5c747aa1a60bfd": {
+    "sceneGuid": "9fc0d4010bbf28b4594072e72b8655ab",
+    "uniqueCameraId": "5f85decf1b724684da5c747aa1a60bfd",
+    "name": "Main",
+    "pointX": 14.160778,
+    "pointY": 7.82142258,
+    "pointZ": 41.01468,
+    "directionX": -0.104511179,
+    "directionY": 0.196169913,
+    "directionZ": -0.02103292,
+    "directionW": -0.9747573,
+    "zoom": 59.54724,
+    "cameraMode": 2
+  }
+}
