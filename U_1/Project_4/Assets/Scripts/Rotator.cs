@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    public float RotateSpeed = 200f;
+    
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, -200f * Input.GetAxis("Mouse X") * Time.deltaTime, 0));
+        transform.Rotate(new Vector3(0, -RotateSpeed * Input.GetAxis("Mouse X") * Time.deltaTime, 0));
         // you don't need this
-        Debug.Log($"{Input.GetAxis("Mouse X")} -> {-150f * Input.GetAxis("Mouse X") * Time.deltaTime}");
+        Debug.Log($"{Input.GetAxis("Mouse X")} -> {-RotateSpeed * Input.GetAxis("Mouse X") * Time.deltaTime}");
     }
 }
