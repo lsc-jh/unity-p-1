@@ -42,13 +42,13 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < Input.touchCount; i++)
         {
             var touch = Input.GetTouch(i);
-            
+
             if (touch.position.x < screenWidth / 2f && touch.phase == TouchPhase.Ended)
             {
                 transform.position += Vector3.left;
             }
-            
-            
+
+
             if (touch.position.x > screenWidth / 2f && touch.phase == TouchPhase.Ended)
             {
                 transform.position += Vector3.right;
@@ -56,22 +56,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public int CoinGet { get; set; }
+    private int _goalCoin;
+    private static int _maxCoin;
+
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "cointag")
+        {
+            CoinGet += 2;
+            if (_maxCoin < CoinGet)
+            {
+                _maxCoin = CoinGet;
+            }
+            // _maxCoin = _maxCoin < CoinGet ? CoinGet : _maxCoin;
+
+            ObjectPools.Instance.ReturnToPool(other.GetComponent<CoinRotate>());
+
+            if (CoinGet >= _goalCoin)
+            {
+                _goalCoin += CoinGet / 2;
+                _addSpeed += 2f;
+                Speed += _addSpeed / 2;
+            }
+        }
+
         if (other.GetComponentInChildren<Transform>().tag == "obs")
         {
             Destroy(other.gameObject);
-        }
-
-        if (GetComponent<Renderer>().material.color != other.GetComponent<Renderer>().material.color)
-        {
-            if (Speed > 8)
+            if (GetComponent<Renderer>().material.color != other.GetComponent<Renderer>().material.color)
             {
-                Speed /= 1.5f;
-            }
+                if (Speed > 8)
+                {
+                    Speed /= 1.5f;
+                }
 
-            _prevSpeed = Speed;
-            StartCoroutine(GameEnd());
+                _prevSpeed = Speed;
+                StartCoroutine(GameEnd());
+            }
         }
     }
 }
