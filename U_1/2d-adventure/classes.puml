@@ -1,0 +1,46 @@
+@startuml ClassOverview
+
+class Character {
+    + Health: number
+}
+
+class Enemy {
+    + DealDamage(amount: number): void
+    + ReaduceHealth(amount: number): void
+}
+
+class Thief extends Enemy {
+    + Health: number
+    + DealDamage(amount: number): void
+    + ReaduceHealth(amount: number): void
+}
+
+class Scoundrel {
+    + Health: number
+    + DealDamage(amount: number): void
+    + ReaduceHealth(amount: number): void
+}
+
+class Another {
+    + Health: number
+    + DealDamage(amount: number): void
+    + ReaduceHealth(amount: number): void
+}
+
+class Weapon {
+    + Durability: number
+    + Owner: Swordman
+}
+
+class Swordman {
+    + Health: number
+    + Weapon: Weapon
+}
+
+Character <-- Enemy
+Enemy <-- Scoundrel
+Enemy <-- Another
+Character <-- Swordman
+Weapon *--* Swordman
+
+@enduml
